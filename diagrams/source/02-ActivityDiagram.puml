@@ -1,0 +1,82 @@
+@startuml
+title Government Subsidy & Grant Disbursement Business Workflow
+
+start
+
+:Beneficiary Registration;
+
+:User Login;
+
+:Browse Government Schemes;
+
+:Select Eligible Scheme;
+
+:Fill Application Form;
+
+:Upload Required Documents;
+
+:Submit Application;
+
+:System Validates Application;
+
+if (Application Valid?) then (Yes)
+
+  :Calculate Eligibility;
+
+  if (Eligible?) then (Yes)
+
+    :Assign Field Officer;
+
+    :Field Verification;
+
+    if (Verification Successful?) then (Yes)
+
+      :District Officer Review;
+
+      if (Approved?) then (Yes)
+
+        :Finance Officer Approval;
+
+        :Release Subsidy Funds;
+
+        :Monitor Project Milestones;
+
+        :Generate Reports;
+
+        :Notify Beneficiary;
+
+        :Close Application;
+
+      else (Rejected)
+
+        :Reject Application;
+
+        :Notify Beneficiary;
+
+      endif
+
+    else (Verification Failed)
+
+      :Reject Application;
+
+      :Notify Beneficiary;
+
+    endif
+
+  else (Not Eligible)
+
+    :Reject Application;
+
+    :Notify Beneficiary;
+
+  endif
+
+else (Invalid Application)
+
+  :Request Application Correction;
+
+endif
+
+stop
+
+@enduml
