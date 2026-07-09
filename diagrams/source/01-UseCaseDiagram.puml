@@ -1,0 +1,78 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+skinparam actorStyle awesome
+skinparam shadowing false
+
+actor Beneficiary
+actor "Field Officer" as FO
+actor "District Officer" as DO
+actor "Finance Officer" as Finance
+actor Administrator
+
+rectangle "Government Subsidy & Grant Disbursement Tracking System" {
+
+  usecase "Register" as UC_Register
+  usecase "Login" as UC_Login
+  usecase "View Available Schemes" as UC_ViewSchemes
+  usecase "Apply for Scheme" as UC_Apply
+  usecase "Upload Documents" as UC_Upload
+  usecase "Track Application Status" as UC_Track
+
+  usecase "View Assigned Applications" as UC_ViewAssigned
+  usecase "Verify Documents" as UC_Verify
+  usecase "Submit Verification Report" as UC_Report
+
+  usecase "Review Application" as UC_Review
+  usecase "Approve Application" as UC_Approve
+  usecase "Reject Application" as UC_Reject
+
+  usecase "Approve Fund Release" as UC_FundApprove
+  usecase "Release Funds" as UC_Release
+
+  usecase "Manage Users" as UC_Users
+  usecase "Manage Schemes" as UC_Schemes
+  usecase "Configure Eligibility Rules" as UC_Config
+  usecase "Generate Reports" as UC_Reports
+}
+
+Beneficiary --> UC_Register
+Beneficiary --> UC_Login
+Beneficiary --> UC_ViewSchemes
+Beneficiary --> UC_Apply
+Beneficiary --> UC_Upload
+Beneficiary --> UC_Track
+
+FO --> UC_Login
+FO --> UC_ViewAssigned
+FO --> UC_Verify
+FO --> UC_Report
+
+DO --> UC_Login
+DO --> UC_Review
+DO --> UC_Approve
+DO --> UC_Reject
+
+Finance --> UC_Login
+Finance --> UC_FundApprove
+Finance --> UC_Release
+
+Administrator --> UC_Login
+Administrator --> UC_Users
+Administrator --> UC_Schemes
+Administrator --> UC_Config
+Administrator --> UC_Reports
+
+UC_Apply ..> UC_Login : <<include>>
+UC_Upload ..> UC_Login : <<include>>
+UC_Track ..> UC_Login : <<include>>
+
+UC_Verify ..> UC_ViewAssigned : <<include>>
+UC_Report ..> UC_Verify : <<include>>
+
+UC_Approve ..> UC_Review : <<include>>
+UC_Reject ..> UC_Review : <<include>>
+
+UC_Release ..> UC_FundApprove : <<include>>
+
+@enduml
