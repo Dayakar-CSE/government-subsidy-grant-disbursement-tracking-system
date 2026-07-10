@@ -208,3 +208,47 @@ The database design follows:
 Refer:
 
 - `database/dbml/01-DatabaseDesign-Part1.dbml`
+
+## Database Design – Part 2
+
+The Core Business Domain consists of the following tables:
+
+- Scheme
+- Application
+- Document
+- Verification
+- Approval
+- Disbursement
+- Milestone
+- AuditLog
+
+The `Application` table acts as the central business entity and references the `Beneficiary` and `Scheme` tables. All workflow-related tables are linked to `Application` through foreign key relationships, ensuring data consistency and supporting the complete subsidy processing lifecycle.
+
+Refer:
+
+- `database/dbml/02-DatabaseDesign-Part2.dbml`
+- `database/diagrams/02-DatabaseDesign-Part2.png`
+
+## Final Database Design
+
+The complete relational database schema has been finalized using DBML and validated through a Crow's Foot ER Diagram.
+
+The schema includes:
+
+- Security Domain
+- Citizen Domain
+- Scheme Domain
+- Application Domain
+
+The database follows:
+
+- Third Normal Form (3NF)
+- Referential Integrity
+- Industry-standard naming conventions
+- Primary and Foreign Key constraints
+
+Artifacts:
+
+- `database/dbml/03-DatabaseDesign.dbml`
+- `database/diagrams/03-DatabaseDesign.png`
+- `database/sql/schema.sql`

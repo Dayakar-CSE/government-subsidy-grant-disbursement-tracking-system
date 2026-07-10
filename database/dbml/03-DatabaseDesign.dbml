@@ -1,0 +1,256 @@
+// =====================================================
+// Government Subsidy & Grant Disbursement Tracking System
+// Final Database Design
+// =====================================================
+
+// =======================
+// Security Domain
+// =======================
+
+Table role {
+
+  role_id bigint [pk, increment]
+
+  role_name varchar(50) [not null, unique]
+
+  description varchar(255)
+
+}
+
+// =======================
+
+Table user {
+
+  user_id bigint [pk, increment]
+
+  role_id bigint [not null, ref: > role.role_id]
+
+  username varchar(50) [not null, unique]
+
+  password varchar(255) [not null]
+
+  email varchar(100) [not null, unique]
+
+  phone varchar(15) [unique]
+
+  status varchar(30) [not null]
+
+  created_at timestamp
+
+}
+
+// =======================
+// Citizen Domain
+// =======================
+
+Table region {
+
+  region_id bigint [pk, increment]
+
+  state varchar(100) [not null]
+
+  district varchar(100) [not null]
+
+  mandal varchar(100)
+
+  village varchar(100)
+
+}
+
+// =======================
+
+Table beneficiary {
+
+  beneficiary_id bigint [pk, increment]
+
+  user_id bigint [not null, unique, ref: > user.user_id]
+
+  region_id bigint [not null, ref: > region.region_id]
+
+  full_name varchar(100) [not null]
+
+  aadhaar_number varchar(12) [not null, unique]
+
+  date_of_birth date
+
+  gender varchar(20)
+
+  category varchar(30)
+
+  annual_income decimal(12,2)
+
+  occupation varchar(100)
+
+}
+
+// =======================
+// Scheme Domain
+// =======================
+
+Table scheme {
+
+  scheme_id bigint [pk, increment]
+
+  scheme_name varchar(150) [not null, unique]
+
+  description text
+
+  grant_amount decimal(12,2) [not null]
+
+  income_limit decimal(12,2)
+
+  start_date date
+
+  end_date date
+
+  active boolean [default: true]
+
+}
+
+// =======================
+// Application Domain
+// =======================
+
+Table application {
+
+  application_id bigint [pk, increment]
+
+  beneficiary_id bigint [not null, ref: > beneficiary.beneficiary_id]
+
+  scheme_id bigint [not null, ref: > scheme.scheme_id]
+
+  application_number varchar(30) [not null, unique]
+
+  application_date date [not null]
+
+  status varchar(30) [not null]
+
+  eligibility_status varchar(30) [not null]
+
+  submitted_at timestamp
+
+  last_updated timestamp
+
+  remarks text
+
+}
+
+// =======================
+
+Table document {
+
+  document_id bigint [pk, increment]
+
+  application_id bigint [not null, ref: > application.application_id]
+
+  file_name varchar(255) [not null]
+
+  document_type varchar(50) [not null]
+
+  file_path varchar(255) [not null]
+
+  uploaded_at timestamp
+
+  verification_status varchar(30)
+
+}
+
+// =======================
+
+Table verification {
+
+  verification_id bigint [pk, increment]
+
+  application_id bigint [not null, ref: > application.application_id]
+
+  verified_by bigint [not null, ref: > user.user_id]
+
+  verification_date date
+
+  status varchar(30)
+
+  remarks text
+
+}
+
+// =======================
+
+Table approval {
+
+  approval_id bigint [pk, increment]
+
+  application_id bigint [not null, ref: > application.application_id]
+
+  approved_by bigint [not null, ref: > user.user_id]
+
+  approval_level int
+
+  status varchar(30)
+
+  approval_date timestamp
+
+  remarks text
+
+}
+
+// =======================
+
+Table disbursement {
+
+  disbursement_id bigint [pk, increment]
+
+  application_id bigint [not null, ref: > application.application_id]
+
+  amount decimal(12,2) [not null]
+
+  transaction_reference varchar(100) [unique]
+
+  payment_method varchar(30)
+
+  status varchar(30)
+
+  disbursement_date timestamp
+
+}
+
+// =======================
+
+Table milestone {
+
+  milestone_id bigint [pk, increment]
+
+  application_id bigint [not null, ref: > application.application_id]
+
+  title varchar(150)
+
+  description text
+
+  target_date date
+
+  completion_date date
+
+  status varchar(30)
+
+}
+
+// =======================
+
+Table audit_log {
+
+  audit_id bigint [pk, increment]
+
+  user_id bigint [not null, ref: > user.user_id]
+
+  entity_name varchar(100)
+
+  entity_id bigint
+
+  action_type varchar(50)
+
+  performed_at timestamp
+
+  old_value text
+
+  new_value text
+
+}
