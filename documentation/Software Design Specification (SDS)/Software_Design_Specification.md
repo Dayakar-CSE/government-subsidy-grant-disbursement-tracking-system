@@ -153,3 +153,58 @@ The integrated Domain Class Diagram combines the Security, Citizen, Scheme, and 
 Refer:
 
 `diagrams/generated/03-DomainClassDiagram.png`
+
+# 4. Entity Relationship Diagram
+
+## Purpose
+
+The Entity Relationship Diagram (ERD) represents the relational database design for the Government Subsidy & Grant Disbursement Tracking System.
+
+The ERD is derived directly from the approved Domain Class Diagram and serves as the blueprint for the MySQL database schema.
+
+## Design Principles
+
+- Third Normal Form (3NF)
+- Referential Integrity
+- Primary Keys
+- Foreign Keys
+- Minimal Data Redundancy
+- Scalable Relationship Design
+
+## Tables
+
+The system contains the following tables:
+
+- Role
+- User
+- Beneficiary
+- Region
+- Scheme
+- Application
+- Document
+- Verification
+- Approval
+- Disbursement
+- Milestone
+- AuditLog
+
+## Diagram
+
+Refer:
+
+`diagrams/generated/04-ERDiagram.png`
+
+## Database Design
+
+The database schema is designed using DBML (Database Markup Language).
+
+The database design follows:
+
+- Third Normal Form (3NF)
+- Referential Integrity
+- Crow's Foot Notation
+- Industry-standard naming conventions
+
+Refer:
+
+- `database/dbml/01-DatabaseDesign-Part1.dbml`
