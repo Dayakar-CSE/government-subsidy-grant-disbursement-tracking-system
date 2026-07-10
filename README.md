@@ -25,3 +25,26 @@ Develop a centralized web application to automate the complete lifecycle of gove
 ---
 
 This repository is being developed incrementally during the Infosys Springboard Virtual Internship 7.0.
+
+## Project Progress
+
+### Phase A – Software Design ✅
+
+- Requirement Analysis
+- Use Case Diagram
+- Business Activity Diagram
+- Class Catalog
+- Domain Class Diagram
+- ER Diagram
+- Database Design (DBML)
+- SQL Schema
+
+### Phase B – Spring Boot Development (Next)
+
+- Spring Boot Project Setup
+- JPA Entities
+- Repositories
+- Services
+- Controllers
+- Security
+- Testing
