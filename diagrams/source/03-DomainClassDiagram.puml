@@ -1,0 +1,183 @@
+@startuml
+title Government Subsidy & Grant Disbursement Tracking System - Domain Class Diagram
+
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam packageStyle rectangle
+
+package "Security Domain" {
+
+class Role {
+  +roleId : Long
+  +roleName : String
+  +description : String
+}
+
+class User {
+  +userId : Long
+  +username : String
+  +password : String
+  +email : String
+  +phone : String
+  +status : UserStatus
+  +createdAt : LocalDateTime
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  LOCKED
+}
+
+Role "1" -- "0..*" User : assigns >
+}
+
+package "Citizen Domain" {
+
+class Beneficiary {
+  +beneficiaryId : Long
+  +fullName : String
+  +aadhaarNumber : String
+  +dateOfBirth : LocalDate
+  +gender : String
+  +category : String
+  +annualIncome : BigDecimal
+  +occupation : String
+}
+
+class Region {
+  +regionId : Long
+  +state : String
+  +district : String
+  +mandal : String
+  +village : String
+}
+
+User "1" -- "1" Beneficiary : account >
+
+Region "1" -- "0..*" Beneficiary : belongs to >
+
+}
+
+
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam packageStyle rectangle
+
+package "Scheme Domain" {
+
+class Scheme {
+  +schemeId : Long
+  +schemeName : String
+  +description : String
+  +grantAmount : BigDecimal
+  +incomeLimit : BigDecimal
+  +startDate : LocalDate
+  +endDate : LocalDate
+  +active : Boolean
+}
+
+}
+
+package "Application Domain" {
+
+class Application {
+  +applicationId : Long
+  +applicationNumber : String
+  +applicationDate : LocalDate
+  +status : ApplicationStatus
+  +eligibilityStatus : EligibilityStatus
+  +submittedAt : LocalDateTime
+  +lastUpdated : LocalDateTime
+  +remarks : String
+}
+
+class Document {
+  +documentId : Long
+  +fileName : String
+  +documentType : DocumentType
+  +filePath : String
+  +uploadedAt : LocalDateTime
+  +verificationStatus : VerificationStatus
+}
+
+class Verification {
+  +verificationId : Long
+  +verificationDate : LocalDate
+  +status : VerificationStatus
+  +remarks : String
+}
+
+class Approval {
+  +approvalId : Long
+  +approvalLevel : Integer
+  +status : ApprovalStatus
+  +approvalDate : LocalDateTime
+  +remarks : String
+}
+
+class Disbursement {
+  +disbursementId : Long
+  +amount : BigDecimal
+  +transactionReference : String
+  +paymentMethod : PaymentMethod
+  +status : DisbursementStatus
+  +disbursementDate : LocalDateTime
+}
+
+class Milestone {
+  +milestoneId : Long
+  +title : String
+  +description : String
+  +targetDate : LocalDate
+  +completionDate : LocalDate
+  +status : MilestoneStatus
+}
+
+class AuditLog {
+  +auditId : Long
+  +entityName : String
+  +entityId : Long
+  +action : String
+  +performedAt : LocalDateTime
+  +oldValue : String
+  +newValue : String
+}
+
+Application "0..*" --> "1" Scheme : scheme
+
+Application "1" *-- "0..*" Document
+Application "1" *-- "0..*" Verification
+Application "1" *-- "0..*" Approval
+Application "1" *-- "0..*" Disbursement
+Application "1" *-- "0..*" Milestone
+
+}
+
+ApplicationStatus <.. Application
+EligibilityStatus <.. Application
+DocumentType <.. Document
+VerificationStatus <.. Document
+VerificationStatus <.. Verification
+ApprovalStatus <.. Approval
+DisbursementStatus <.. Disbursement
+MilestoneStatus <.. Milestone
+PaymentMethod <.. Disbursement
+
+package "Enumerations" {
+
+enum UserStatus
+enum ApplicationStatus
+enum EligibilityStatus
+enum VerificationStatus
+enum ApprovalStatus
+enum DisbursementStatus
+enum MilestoneStatus
+enum DocumentType
+enum PaymentMethod
+
+}
+
+@enduml
+
+

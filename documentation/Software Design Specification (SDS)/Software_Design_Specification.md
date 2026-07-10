@@ -133,3 +133,23 @@ The following entities have a composition relationship with `Application` becaus
 Refer:
 
 `diagrams/generated/03-DomainClassDiagram-Part2.png`
+
+## Part 3 – Integrated Domain Class Diagram
+
+### Purpose
+
+The integrated Domain Class Diagram combines the Security, Citizen, Scheme, and Application domains into a single architectural model.
+
+### Architectural Highlights
+
+- Authentication and Authorization are separated from business entities.
+- Application is the Aggregate Root for all business workflows.
+- Composition is used where child entities cannot exist independently.
+- Enumerations are used to represent controlled business states.
+- The model follows the principles of Domain-Driven Design (DDD), Single Responsibility Principle (SRP), High Cohesion, and Low Coupling.
+
+### Diagram
+
+Refer:
+
+`diagrams/generated/03-DomainClassDiagram.png`
