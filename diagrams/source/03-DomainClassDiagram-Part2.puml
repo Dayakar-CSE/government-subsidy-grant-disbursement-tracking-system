@@ -1,0 +1,108 @@
+@startuml
+title Domain Class Diagram - Part 2 (Core Business Domain)
+
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam packageStyle rectangle
+
+package "Scheme Domain" {
+
+class Scheme {
+  +schemeId : Long
+  +schemeName : String
+  +description : String
+  +grantAmount : BigDecimal
+  +incomeLimit : BigDecimal
+  +startDate : LocalDate
+  +endDate : LocalDate
+  +active : Boolean
+}
+
+}
+
+package "Application Domain" {
+
+class Application {
+  +applicationId : Long
+  +applicationNumber : String
+  +applicationDate : LocalDate
+  +status : ApplicationStatus
+  +eligibilityStatus : EligibilityStatus
+  +submittedAt : LocalDateTime
+  +lastUpdated : LocalDateTime
+  +remarks : String
+}
+
+class Document {
+  +documentId : Long
+  +fileName : String
+  +documentType : DocumentType
+  +filePath : String
+  +uploadedAt : LocalDateTime
+  +verificationStatus : VerificationStatus
+}
+
+class Verification {
+  +verificationId : Long
+  +verificationDate : LocalDate
+  +status : VerificationStatus
+  +remarks : String
+}
+
+class Approval {
+  +approvalId : Long
+  +approvalLevel : Integer
+  +status : ApprovalStatus
+  +approvalDate : LocalDateTime
+  +remarks : String
+}
+
+class Disbursement {
+  +disbursementId : Long
+  +amount : BigDecimal
+  +transactionReference : String
+  +paymentMethod : PaymentMethod
+  +status : DisbursementStatus
+  +disbursementDate : LocalDateTime
+}
+
+class Milestone {
+  +milestoneId : Long
+  +title : String
+  +description : String
+  +targetDate : LocalDate
+  +completionDate : LocalDate
+  +status : MilestoneStatus
+}
+
+class AuditLog {
+  +auditId : Long
+  +entityName : String
+  +entityId : Long
+  +action : String
+  +performedAt : LocalDateTime
+  +oldValue : String
+  +newValue : String
+}
+
+Application "0..*" --> "1" Scheme : scheme
+
+Application "1" *-- "0..*" Document
+Application "1" *-- "0..*" Verification
+Application "1" *-- "0..*" Approval
+Application "1" *-- "0..*" Disbursement
+Application "1" *-- "0..*" Milestone
+
+}
+
+ApplicationStatus <.. Application
+EligibilityStatus <.. Application
+DocumentType <.. Document
+VerificationStatus <.. Document
+VerificationStatus <.. Verification
+ApprovalStatus <.. Approval
+DisbursementStatus <.. Disbursement
+MilestoneStatus <.. Milestone
+PaymentMethod <.. Disbursement
+
+@enduml

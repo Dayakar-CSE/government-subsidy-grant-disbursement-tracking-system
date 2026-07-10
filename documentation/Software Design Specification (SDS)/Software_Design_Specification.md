@@ -102,3 +102,34 @@ The Citizen Domain consists of the `Beneficiary` and `Region` entities, represen
 Refer:
 
 `diagrams/generated/03-DomainClassDiagram-Part1.png`
+
+## Part 2 – Core Business Domain
+
+### Purpose
+
+This section models the core business entities responsible for managing government subsidy applications, supporting documents, verification, approval workflow, fund disbursement, compliance monitoring, and audit history.
+
+### Aggregate Root
+
+The `Application` entity acts as the Aggregate Root for the business workflow.
+
+### Composition Relationships
+
+The following entities have a composition relationship with `Application` because they cannot exist independently:
+
+- Document
+- Verification
+- Approval
+- Disbursement
+- Milestone
+
+### Associations
+
+- Each Application belongs to one Scheme.
+- AuditLog records user actions across business entities.
+
+### Diagram
+
+Refer:
+
+`diagrams/generated/03-DomainClassDiagram-Part2.png`
