@@ -70,3 +70,35 @@ An application may be rejected at any of these stages and the beneficiary is not
 Refer:
 
 `diagrams/generated/02-ActivityDiagram.png`
+
+## Supporting Design Documents
+
+- Class Catalog (`Class_Catalog.md`)
+
+# 3. Domain Class Diagram
+
+## Part 1 – Security and Citizen Domain
+
+### Purpose
+
+This section models the authentication and citizen profile components of the Government Subsidy & Grant Disbursement Tracking System.
+
+### Security Domain
+
+The Security Domain consists of the `Role` and `User` entities responsible for authentication and authorization.
+
+### Citizen Domain
+
+The Citizen Domain consists of the `Beneficiary` and `Region` entities, representing beneficiary information and geographical hierarchy.
+
+### Relationships
+
+- One Role can be assigned to many Users.
+- Each User account belongs to exactly one Beneficiary.
+- One Region can contain multiple Beneficiaries.
+
+### Diagram
+
+Refer:
+
+`diagrams/generated/03-DomainClassDiagram-Part1.png`

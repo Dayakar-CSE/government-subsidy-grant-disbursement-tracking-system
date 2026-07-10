@@ -1,0 +1,62 @@
+@startuml
+title Domain Class Diagram - Part 1 (Security & Citizen Domain)
+
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam packageStyle rectangle
+
+package "Security Domain" {
+
+class Role {
+  +roleId : Long
+  +roleName : String
+  +description : String
+}
+
+class User {
+  +userId : Long
+  +username : String
+  +password : String
+  +email : String
+  +phone : String
+  +status : UserStatus
+  +createdAt : LocalDateTime
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  LOCKED
+}
+
+Role "1" -- "0..*" User : assigns >
+}
+
+package "Citizen Domain" {
+
+class Beneficiary {
+  +beneficiaryId : Long
+  +fullName : String
+  +aadhaarNumber : String
+  +dateOfBirth : LocalDate
+  +gender : String
+  +category : String
+  +annualIncome : BigDecimal
+  +occupation : String
+}
+
+class Region {
+  +regionId : Long
+  +state : String
+  +district : String
+  +mandal : String
+  +village : String
+}
+
+User "1" -- "1" Beneficiary : account >
+
+Region "1" -- "0..*" Beneficiary : belongs to >
+
+}
+
+@enduml
