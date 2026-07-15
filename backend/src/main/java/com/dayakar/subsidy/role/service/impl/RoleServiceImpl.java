@@ -1,6 +1,8 @@
 package com.dayakar.subsidy.role.service.impl;
 
 import com.dayakar.subsidy.common.enums.RoleType;
+import com.dayakar.subsidy.exception.DuplicateResourceException;
+import com.dayakar.subsidy.exception.ResourceNotFoundException;
 import com.dayakar.subsidy.role.dto.RoleRequest;
 import com.dayakar.subsidy.role.dto.RoleResponse;
 import com.dayakar.subsidy.role.entity.Role;
@@ -23,7 +25,7 @@ public class RoleServiceImpl implements RoleService {
     public RoleResponse createRole(RoleRequest request) {
 
         if (roleRepository.existsByRoleName(request.getRoleName())) {
-            throw new IllegalArgumentException(
+            throw new DuplicateResourceException(
                     "Role already exists: " + request.getRoleName());
         }
 
@@ -73,7 +75,7 @@ public class RoleServiceImpl implements RoleService {
 
         Role role = roleRepository.findByRoleName(roleType)
                 .orElseThrow(() ->
-                        new IllegalArgumentException("Role not found"));
+                        new ResourceNotFoundException("Role not found"));
 
         return RoleResponse.builder()
                 .roleId(role.getRoleId())

@@ -1,6 +1,8 @@
 package com.dayakar.subsidy.user.service.impl;
 
 import com.dayakar.subsidy.common.enums.RoleType;
+import com.dayakar.subsidy.exception.DuplicateResourceException;
+import com.dayakar.subsidy.exception.ResourceNotFoundException;
 import com.dayakar.subsidy.role.entity.Role;
 import com.dayakar.subsidy.role.repository.RoleRepository;
 import com.dayakar.subsidy.user.dto.UserRegistrationRequest;
@@ -33,20 +35,20 @@ public class UserServiceImpl implements UserService {
     public UserResponse registerUser(UserRegistrationRequest request) {
 
         if (userRepository.existsByUsername(request.getUsername())) {
-            throw new IllegalArgumentException("Username already exists.");
+            throw new DuplicateResourceException("Username already exists.");
         }
 
         if (userRepository.existsByEmail(request.getEmail())) {
-            throw new IllegalArgumentException("Email already exists.");
+            throw new DuplicateResourceException("Email already exists.");
         }
 
         if (request.getPhone() != null &&
                 userRepository.existsByPhone(request.getPhone())) {
-            throw new IllegalArgumentException("Phone number already exists.");
+            throw new DuplicateResourceException("Phone number already exists.");
         }
 
         Role beneficiaryRole = roleRepository.findByRoleName(RoleType.BENEFICIARY)
-                .orElseThrow(() -> new IllegalArgumentException("Beneficiary role not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("Beneficiary role not found."));
 
         User user = User.builder()
                 .username(request.getUsername())
@@ -74,7 +76,7 @@ public class UserServiceImpl implements UserService {
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() ->
-                        new IllegalArgumentException("User not found."));
+                        new ResourceNotFoundException("User not found."));
 
         return mapToResponse(user);
     }

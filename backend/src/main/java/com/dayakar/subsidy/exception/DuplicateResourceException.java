@@ -1,0 +1,9 @@
+package com.dayakar.subsidy.exception;
+
+public class DuplicateResourceException extends RuntimeException {
+
+    public DuplicateResourceException(String message) {
+        super(message);
+    }
+
+}
