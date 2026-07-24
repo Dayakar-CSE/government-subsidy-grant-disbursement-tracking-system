@@ -23,6 +23,11 @@ public class SecurityConfig {
                         ).permitAll()
 
                         .requestMatchers(
+                                "/api/v1/beneficiaries/**",
+                                "/api/v1/schemes/**"
+                        ).permitAll()
+
+                        .requestMatchers(
                                 "/actuator/**"
                         ).permitAll()
 
